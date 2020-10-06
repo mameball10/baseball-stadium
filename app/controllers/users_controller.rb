@@ -2,10 +2,16 @@ class UsersController < ApplicationController
   before_action :require_user_logged_in, only: [:index, :show, :edit]
   
   def index
+    if logged_in?
+      @message = current_user.messages.build
+      @messages = current_user.messages.order(id: :desc).page(params[:page])
+    end
   end
 
   def show
     @user = User.find(params[:id])
+    @messages = current_user.messages.order(id: :desc).page(params[:page])
+    counts(@user)
   end
 
   def new

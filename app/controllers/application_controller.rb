@@ -9,4 +9,8 @@ class ApplicationController < ActionController::Base
       redirect_to root_url
     end
   end
+  
+  def counts(user)
+    @count_messages = user.messages.count
+  end
 end

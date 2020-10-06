@@ -6,5 +6,8 @@ class User < ApplicationRecord
                     uniqueness: { case_sensitive: false }
   
   has_secure_password
+  
   belongs_to :team, optional: true
+  
+  has_many :messages
 end
