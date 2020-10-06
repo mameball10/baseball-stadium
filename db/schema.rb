@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_05_070411) do
+ActiveRecord::Schema.define(version: 2020_10_06_050256) do
 
   create_table "teams", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "team_name"
@@ -25,6 +25,9 @@ ActiveRecord::Schema.define(version: 2020_10_05_070411) do
     t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "team_id"
+    t.index ["team_id"], name: "index_users_on_team_id"
   end
 
+  add_foreign_key "users", "teams"
 end
