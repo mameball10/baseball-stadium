@@ -17,10 +17,8 @@
   </div> 
 </div>
 
-<%= link_to 'プロフィール編集', edit_user_path, class: 'btn btn-primary btn-block' %>
-
-<ul class="nav nav-tabs nav-justified mb-3">
+<%= link_to 'プロフィール編集', edit_user_path, class: 'btn btn-primary btn-block' %><ul class="nav nav-tabs nav-justified mb-3">
   <li class="nav-item"><a href="<%= user_path(@user) %>" class="nav-link <%= 'active' if current_page?(user_path(@user)) %>">応援メッセージ<span class="badge badge-secondary"><%= @count_messages %></span></a></li>
   <li class="nav-item"><a href="<%= likes_user_path(@user) %>" class="nav-link <%= 'active' if current_page?(likes_user_path(@user)) %>">お気に入り <span class="badge badge-secondary"><%= @count_likes %></span></a></li>
 </ul>
-<%= render 'messages/messages', messages: @messages %>
+<%= render 'messages/messages', messages: @likes %>

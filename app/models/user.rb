@@ -10,4 +10,19 @@ class User < ApplicationRecord
   belongs_to :team, optional: true
   
   has_many :messages
+  has_many :favorites
+  has_many :likes, through: :favorites, source: :message
+  
+  def favorite(message)
+    self.favorites.find_or_create_by(message_id: message.id)
+  end
+  
+  def unfavorite(message)
+    favorite = self.favorites.find_by(message_id: message.id)
+    favorite.destroy if favorite
+  end
+  
+  def favorite?(message)
+    self.likes.include?(message)
+  end
 end

@@ -37,7 +37,7 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     
-    # if current_user == @user
+    if current_user == @user
       if @user.update(edit_user_params)
         flash[:success] = 'プロフィールの編集が完了しました。'
         redirect_to @user
@@ -45,9 +45,15 @@ class UsersController < ApplicationController
         flash.now[:danger] = 'プロフィールの編集に失敗しました。'
         render :edit
       end
-    # else
-      # redirect_to root_url
-    # end
+    else
+      redirect_to root_url
+    end
+  end
+  
+  def likes
+    @user = User.find(params[:id])
+    @likes = @user.likes.page(params[:page])
+    counts(@user)
   end
   
   private

@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_06_073719) do
+ActiveRecord::Schema.define(version: 2020_10_07_025058) do
+
+  create_table "favorites", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "message_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["message_id"], name: "index_favorites_on_message_id"
+    t.index ["user_id"], name: "index_favorites_on_user_id"
+  end
 
   create_table "messages", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "content"
@@ -37,6 +46,8 @@ ActiveRecord::Schema.define(version: 2020_10_06_073719) do
     t.index ["team_id"], name: "index_users_on_team_id"
   end
 
+  add_foreign_key "favorites", "messages"
+  add_foreign_key "favorites", "users"
   add_foreign_key "messages", "users"
   add_foreign_key "users", "teams"
 end
