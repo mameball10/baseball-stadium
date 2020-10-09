@@ -1,0 +1,51 @@
+<div class="row">
+  <aside class="col-sm-4">
+    <div class="card">
+      <div class="card-header">
+        <h3 class="card-title"><%= @team.team_name %></h3>
+      </div>
+      <div class="card-body">
+        <%= image_tag @team.team_image %>
+      </div>
+    </div>
+  </aside>
+  <div class="offset-sm-1 col-sm-7">
+    <u><h1><%= @team.team_name %>掲示板</h1></u>
+  </div>  
+</div>
+
+<div>
+  <ul class="list-unstyled">
+    <% @posts.each do |post| %>
+      <li class="media mb-3">
+        <div class="media-body">
+          <div>
+            <%= post.name %> : <span class="text-muted">posted at <%= post.created_at %></span>
+          </div>
+          <div>
+            <p class="mb-0"><%= post.comment %></p>
+          </div>
+          <div>
+            <%= link_to "削除", post, method: :delete, data: { confirm: "このコメントを削除しますか?" }, class: 'btn btn-danger btn-sm' %>
+          </div>
+        </div>
+      </li>
+    <% end %>
+    <%= paginate @posts %>
+  </ul>
+</div>
+
+<div>
+  <h3>〇新規書き込み</h3>
+  <%= form_with(model: @post, local: true) do |f| %>
+      <div class="form-group">
+        <%= f.label :name, '名前' %> : 
+        <%= f.text_area :name, class: 'form-control' %>
+      </div>
+      <div class="form-group">
+        <%= f.label :comment, 'コメント' %> : 
+        <%= f.text_area :comment, class: 'form-control' %>
+      </div>
+      <%= f.submit '投稿', class: 'btn btn-primary btn-block' %>
+  <% end %>
+</div>

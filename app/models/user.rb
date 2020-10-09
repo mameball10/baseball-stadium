@@ -12,6 +12,8 @@ class User < ApplicationRecord
   has_many :messages
   has_many :favorites
   has_many :likes, through: :favorites, source: :message
+  has_many :myplayers
+  has_many :favplyers, through: :myplayers, source: :player
   
   def favorite(message)
     self.favorites.find_or_create_by(message_id: message.id)
@@ -25,4 +27,18 @@ class User < ApplicationRecord
   def favorite?(message)
     self.likes.include?(message)
   end
+  
+  def myplayer(player)
+    self.myplyers.find_or_create_by(player_id: player.id)
+  end
+  
+  def noplayer(player)
+    myplayer = self.myplyers.find_by(player_id: player.id)
+    myplyers.destroy if myplayer
+  end
+  
+  def myplayer?(player)
+    self.myplyers.include?(player)
+  end
+
 end

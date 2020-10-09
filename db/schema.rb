@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_07_025058) do
+ActiveRecord::Schema.define(version: 2020_10_09_060405) do
 
   create_table "favorites", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.bigint "user_id"
@@ -27,6 +27,32 @@ ActiveRecord::Schema.define(version: 2020_10_07_025058) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_messages_on_user_id"
+  end
+
+  create_table "myplayers", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "player_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["player_id"], name: "index_myplayers_on_player_id"
+    t.index ["user_id"], name: "index_myplayers_on_user_id"
+  end
+
+  create_table "players", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "player_name"
+    t.bigint "team_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["team_id"], name: "index_players_on_team_id"
+  end
+
+  create_table "posts", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "comment"
+    t.bigint "team_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "name"
+    t.index ["team_id"], name: "index_posts_on_team_id"
   end
 
   create_table "teams", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -49,5 +75,9 @@ ActiveRecord::Schema.define(version: 2020_10_07_025058) do
   add_foreign_key "favorites", "messages"
   add_foreign_key "favorites", "users"
   add_foreign_key "messages", "users"
+  add_foreign_key "myplayers", "players"
+  add_foreign_key "myplayers", "users"
+  add_foreign_key "players", "teams"
+  add_foreign_key "posts", "teams"
   add_foreign_key "users", "teams"
 end

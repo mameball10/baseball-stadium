@@ -10,6 +10,7 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :show, :new, :create, :edit, :update] do
     member do
       get :likes
+      get :myteams
     end
   end
   
@@ -17,4 +18,5 @@ Rails.application.routes.draw do
   
   resources :messages, only: [:create, :destroy]
   resources :favorites, only: [:create, :destroy]
+  resources :posts, only: [:create, :destroy]
 end

@@ -1,10 +1,11 @@
 class UsersController < ApplicationController
-  before_action :require_user_logged_in, only: [:index, :show, :edit]
+  before_action :require_user_logged_in, only: [:index, :show, :edit, :likes, :myteams]
+  before_action :user_myteams_present?, only: [:myteams]
   
   def index
+    @messages = Message.all.order(id: :desc).page(params[:page])
     if logged_in?
       @message = current_user.messages.build
-      @messages = current_user.messages.order(id: :desc).page(params[:page])
     end
   end
 
@@ -56,6 +57,13 @@ class UsersController < ApplicationController
     counts(@user)
   end
   
+  def myteams
+    @user = User.find(params[:id])
+    @team = @user.team
+    @post = @user.team.posts.build
+    @posts = @team.posts.order(created_at: :desc).page(params[:page])
+  end
+  
   private
   
   def user_params
@@ -64,5 +72,11 @@ class UsersController < ApplicationController
   
   def edit_user_params
     params.require(:user).permit(:name, :email, :password, :password_confirmation, :team_id)
+  end
+  
+  def user_myteams_present?
+    unless current_user.team.present?
+      redirect_to edit_user_path(current_user)
+    end
   end
 end

@@ -11,7 +11,17 @@
   </div>
   <div class="offset-sm-2 col-sm-6">
     <ul>
-      <li>好きな球団：</li>
+
+      <li>好きな球団：
+        <% if @user.team.present? %>
+          <%= image_tag @user.team.team_image %>
+          <%= @user.team.team_name %>
+        <% else %>
+          未登録
+        <% end %>
+      </li>
+
+      
       <li>注目の選手・好きな選手：</li>
     </ul>
   </div> 
