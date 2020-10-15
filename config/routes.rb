@@ -11,12 +11,12 @@ Rails.application.routes.draw do
     member do
       get :likes
       get :myteams
+      get :featured
     end
   end
-  
-  resources :teams, only: [:show]
   
   resources :messages, only: [:create, :destroy]
   resources :favorites, only: [:create, :destroy]
   resources :posts, only: [:create, :destroy]
+  resources :myplayers, only: [:create, :destroy]
 end

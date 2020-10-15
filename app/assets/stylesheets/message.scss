@@ -1,0 +1,26 @@
+.favorite-btn {
+    color: gry; 
+    opacity: 0.5;
+ }
+ 
+ 
+.favorite-btn:hover {
+    opacity: 1.0;
+ }
+ 
+ .unfavorite-btn {
+    color: red; 
+    opacity: 0.5;
+ }
+ 
+ .unfavorite-btn:hover {
+    opacity: 1.0;
+ }
+ 
+.user-message {
+    float: left;
+ }
+ 
+ .icon {
+     float: right;
+ }

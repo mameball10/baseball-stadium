@@ -1,0 +1,32 @@
+<div class="text-center my-4">
+  <u><h1>プロフィール編集</h1></u>
+</div>
+
+
+<ul class="nav nav-tabs nav-justified mb-3">
+  <li class="nav-item">
+    <a href="<%= edit_user_path(@user) %>" class="nav-link <%= 'active' if current_page?(edit_user_path(@user)) %>"> アカウント設定・好きな球団 </a></li>
+  </li>
+  <li class="nav-item">
+    <a href="<%= featured_user_path(@user) %>" class="nav-link <%= 'active' if current_page?(featured_user_path(@user)) %>"> 注目選手 </a></li>
+  </li>
+</ul>
+
+<div class="row">
+  <div class="col-sm-6 offset-sm-3 mb-5">
+    <%= form_with(url: featured_user_path, local: true, method: :get) do |f| %>
+      <%= f.label :team_id, '注目している選手の球団を選択してください。' %>
+      <%= f.label :team_id, '球団を選択すると選手名が表示されます。' %>
+      <%= f.collection_select :team_id, @teams, :id, :team_name, prompt:"選択してください" %>
+      <%= f.submit "選択" %>
+    <% end %>
+
+    
+      <% @players.each do |player| %>
+        <%= render 'myplayers/select_player_button', player: player %>
+      <% end %>
+      <% if @player.present? %>
+        <p>注目選手に選択されている選手は<i class="fas fa-heart select-btn">が表示されます。<p>
+      <% end %>
+  </div>
+</div>

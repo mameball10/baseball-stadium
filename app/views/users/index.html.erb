@@ -1,13 +1,66 @@
-<div class="row">
-  <aside class="col-sm-6">
-    <%= form_with(model: @message, local: true) do |f| %>
-      <div class="form-group">
-        <%= f.text_area :content, class: 'form-control', rows: 5 %>
+<%= stylesheet_link_tag 'home' %>
+
+<div class="post-message ">
+<%= form_with(model: @message, local: true) do |f| %>
+  <div class="row">
+    <div class="col-9">
+      <div class="form-group pt-3 pl-5">
+        <%= f.text_area :content, class: 'form-control', placeholder: "応援メッセージ" %>
       </div>
-      <%= f.submit '応援メッセージの投稿', class: 'btn btn-primary btn-block' %>
-    <% end %>
-  </aside>
-  <div class="col-sm-6">
-    <%= render 'messages/messages', messages: @messages %>
+    </div>
+    <div class="col-2 mt-4">
+      <div class="form-group">
+        <%= f.submit '応援メッセージの投稿', class: 'btn btn-primary' %>
+      </div>
+    </div>
+  </div>
+<% end %>
+</div>
+
+<div class='home-main'>
+  <div class="row">
+    <div class="col-sm-7">
+      <div class='heading'>
+        <p>みんなの応援メッセージ</p>
+      </div>
+      <%= render 'messages/messages', messages: @messages %>
+    </div>
+    <aside class="offset-sm-1 col-sm-2 offset-sm-1 ranking">
+      <div class='ranking-heading'>
+        <p>注目選手ランキング</p>
+      </div>
+      <table border="1">
+        <thead>
+          <tr>
+            <th>順位</th>
+            <th>名前</th>
+            <th>注目数</th>
+          </tr>
+        </thead>
+        <tbody>
+            <% last_rank = 0 %>
+            <% rank = 1 %>
+          <% @all_ranks.each.with_index(1) do |ranking, i| %>
+            <tr>
+              <% if i == 1 %>
+                <% last_rank = ranking.myplayers.count %>
+              <% end %>
+              <% if ranking.myplayers.count != last_rank %>
+                <% rank = i %>
+                  <td><%= rank %></td>
+                  <td><%= ranking.player_name %></td>
+                  <td><%= ranking.myplayers.count %></td>
+                <% last_rank = ranking.myplayers.count %>
+              <% else %>
+                <% last_rank = ranking.myplayers.count %>
+                  <td><%= rank %></td>
+                  <td><%= ranking.player_name %></td>
+                  <td><%= ranking.myplayers.count %></td>
+              <% end %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    </aside>
   </div>
 </div>

@@ -1,51 +1,44 @@
-<div class="row">
-  <aside class="col-sm-4">
-    <div class="card">
-      <div class="card-header">
-        <h3 class="card-title"><%= @team.team_name %></h3>
-      </div>
-      <div class="card-body">
-        <%= image_tag @team.team_image %>
-      </div>
-    </div>
-  </aside>
-  <div class="offset-sm-1 col-sm-7">
-    <u><h1><%= @team.team_name %>掲示板</h1></u>
-  </div>  
+<%= stylesheet_link_tag 'board' %>
+
+<div class="heading-board">
+  <%= image_tag @team.team_image, :width => '80', :height => '80' %>
+  <h1 class="mt-3 ml-1"><%= @team.team_name %>掲示板</h1>
 </div>
 
+
 <div>
-  <ul class="list-unstyled">
-    <% @posts.each do |post| %>
-      <li class="media mb-3">
-        <div class="media-body">
-          <div>
-            <%= post.name %> : <span class="text-muted">posted at <%= post.created_at %></span>
+  <ul class="list-unstyled posts">
+    <% if @posts.present? %>
+      <% @posts.each.with_index(1) do |post, i| %>
+        <li class="media mb-3">
+          <div class="media-body">
+            <div>
+              <%= i %>. <%= post.name %> : <span class="text-muted"><%= post.created_at.strftime("%Y年%m月%d日 %H:%M") %></span>
+            </div>
+            <div>
+              <p class="mb-0"><%= post.comment %></p>
+            </div>
           </div>
-          <div>
-            <p class="mb-0"><%= post.comment %></p>
-          </div>
-          <div>
-            <%= link_to "削除", post, method: :delete, data: { confirm: "このコメントを削除しますか?" }, class: 'btn btn-danger btn-sm' %>
-          </div>
-        </div>
-      </li>
+        </li>
+      <% end %>
+      <%= paginate @posts %>
+    <% else %>
+      書き込みがありません。
     <% end %>
-    <%= paginate @posts %>
   </ul>
 </div>
 
-<div>
-  <h3>〇新規書き込み</h3>
+<div class="new-posts">
+  <h4>〇新規書き込み</h4>
   <%= form_with(model: @post, local: true) do |f| %>
       <div class="form-group">
         <%= f.label :name, '名前' %> : 
-        <%= f.text_area :name, class: 'form-control' %>
+        <%= f.text_field :name, class: 'form-control' %>
       </div>
       <div class="form-group">
         <%= f.label :comment, 'コメント' %> : 
         <%= f.text_area :comment, class: 'form-control' %>
       </div>
-      <%= f.submit '投稿', class: 'btn btn-primary btn-block' %>
+      <%= f.submit '投稿', class: 'btn btn-primary' %>
   <% end %>
 </div>

@@ -1,0 +1,17 @@
+<%= stylesheet_link_tag 'select_player' %>
+
+<% if current_user.select_myplayer?(player) %>
+  <%= form_with(model: current_user.myplayers.find_by(player_id: player.id), local: true, method: :delete, class:"d-inline") do |f| %>
+    <%= hidden_field_tag :player_id, player.id %>
+    <%= f.button :type => "submit", :class =>"btn btn-default btn-sm" do %>
+      <%= player.player_name %> : <i class="fas fa-heart release-btn"></i>
+    <% end %>
+  <% end %>
+<% else %>
+  <%= form_with(model: current_user.myplayers.build, local: true, class:"d-inline") do |f| %>
+    <%= hidden_field_tag :player_id, player.id %>
+    <%= f.button :type => "submit", :class =>"btn btn-default btn-sm" do %>
+      <%= player.player_name %> : <i class="fas fa-heart select-btn"></i>
+    <% end %>
+  <% end %> 
+<% end %>

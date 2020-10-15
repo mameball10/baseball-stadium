@@ -1,10 +1,60 @@
-<% if logged_in? %>
-  <h1>プロ野球応援スタジアム</h1>
-  <p>みんなでプロ野球を盛り上げよう！！！</p>
-<% else %>
-  <h1>プロ野球応援スタジアム</h1>
-  <p>みんなでプロ野球を盛り上げよう！！！</p>
+<%= stylesheet_link_tag 'top' %>
 
-  <%= link_to 'アカウント作成', signup_path, class: 'btn btn-lg btn-primary' %>
-  <%= link_to 'ログイン', login_path, class: 'btn btn-lg btn-primary' %>
-<% end %>
+<div class="jumbotron jumbotron-fluid">
+  <div>
+    <% if logged_in? %>
+      <h1>プロ野球応援スタジアム</h1>
+      <p>みんなでプロ野球を盛り上げよう！！！</p>
+    <% else %>
+      <h1>プロ野球応援スタジアム</h1>
+      <p>みんなでプロ野球を盛り上げよう！！！</p>
+      <div class="button">
+        <%= link_to 'アカウント作成', signup_path, class: 'btn btn-lg btn-primary' %>
+        <%= link_to 'ログイン', login_path, class: 'btn btn-lg btn-primary' %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<div class='main'>
+  <div class="site-overview mb-4">
+    <div class="mb-3">
+      <u><h3>● このサイトでできること</h3></u>
+    </div>
+    <div class="illusts">
+      <div class="illust">
+        <img src="/assets/baseball_man.png" width="130" height="130" alt="">
+        <p>応援メッセージの投稿！</p>
+      </div>
+      <div class="illust">
+        <img src="/assets/board_image.jpg" width="130" height="130" alt="">
+        <p>掲示板でファン同士語り合おう！</p>
+      </div>
+      <div class="illust">
+        <img src="/assets/ranking.png" width="130" height="130"alt="">
+        <p>注目選手のランキング！</p>
+      </div>
+    </div>
+  </div>
+  
+  <div class="new-messages">
+    <div>
+      <u><h3>● 新着応援メッセージ</h3></u>
+    </div>
+    <ul class="list-unstyled messages">
+      <% @messages.each do |message| %>
+        <li class="media p-2 message">
+          <img class="mr-2 rounded" src="<%= gravatar_url(message.user, { size: 50 }) %>" alt="">
+          <div class="media-body">
+            <div>
+              <%= message.user.name %> <span class="text-muted"> : <%= message.created_at.strftime("%Y年%m月%d日 %H:%M") %></span>
+            </div>
+            <div>
+              <p class="mb-0"><%= message.content %></p>
+            </div>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

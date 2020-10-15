@@ -1,31 +1,44 @@
-<div class="row">
-  <div class="col-sm-4">
+<%= stylesheet_link_tag 'mypage' %>
+
+<div class="row mypage">
+  <div class="col-sm-3">
     <div class="card">
       <div class="card-header">
         <h3 class="card-title"><%= @user.name %></h3>
       </div>
       <div class="card-body">
-        <img class="rounded img-fluid" src="<%= gravatar_url(@user, { size: 500 }) %>" alt="">
+        <img class="rounded img-fluid" src="<%= gravatar_url(@user, { size: 180 }) %>" alt="">
       </div>
     </div>
   </div>
-  <div class="offset-sm-2 col-sm-6">
-    <ul>
+  <div class="offset-sm-2 col-sm-7">
+    <ul class='mypage-list'>
       <li>好きな球団：
         <% if @user.team.present? %>
-          <%= image_tag @user.team.team_image %>
+          <%= image_tag @user.team.team_image, :width => '30', :height => '30' %> 
           <%= @user.team.team_name %>
         <% else %>
           未登録
         <% end %>
       </li>
-      <li>注目の選手・好きな選手：</li>
+      
+      <li>注目の選手：
+        <% if @featured.present? %>
+          <% @featured.each do |player| %>
+            <%= player.player_name %>
+          <% end %>
+        <% else %>
+          未登録
+        <% end %>
+      </li>
     </ul>
+    <%= link_to 'プロフィール編集', edit_user_path, class: "edit_link" %>
   </div> 
 </div>
 
-<%= link_to 'プロフィール編集', edit_user_path, class: 'btn btn-primary btn-block' %><ul class="nav nav-tabs nav-justified mb-3">
-  <li class="nav-item"><a href="<%= user_path(@user) %>" class="nav-link <%= 'active' if current_page?(user_path(@user)) %>">応援メッセージ<span class="badge badge-secondary"><%= @count_messages %></span></a></li>
-  <li class="nav-item"><a href="<%= likes_user_path(@user) %>" class="nav-link <%= 'active' if current_page?(likes_user_path(@user)) %>">お気に入り <span class="badge badge-secondary"><%= @count_likes %></span></a></li>
+
+<ul class="nav nav-tabs nav-justified messages">
+  <li class="nav-item message"><a href="<%= user_path(@user) %>" class="nav-link <%= 'active' if current_page?(user_path(@user)) %>">応援メッセージ<span class="badge badge-secondary"><%= @count_messages %></span></a></li>
+  <li class="nav-item message"><a href="<%= likes_user_path(@user) %>" class="nav-link <%= 'active' if current_page?(likes_user_path(@user)) %>">お気に入り <span class="badge badge-secondary"><%= @count_likes %></span></a></li>
 </ul>
 <%= render 'messages/messages', messages: @likes %>

@@ -3,16 +3,19 @@ class UsersController < ApplicationController
   before_action :user_myteams_present?, only: [:myteams]
   
   def index
-    @messages = Message.all.order(id: :desc).page(params[:page])
+    @messages = Message.all.order(id: :desc).page(params[:page]).per(10)
     if logged_in?
       @message = current_user.messages.build
     end
+    
+    @all_ranks = Player.find(Myplayer.group(:player_id).order('count(player_id) desc').limit(10).pluck(:player_id))
   end
 
   def show
     @user = User.find(params[:id])
-    @messages = current_user.messages.order(id: :desc).page(params[:page])
+    @messages = current_user.messages.order(id: :desc).page(params[:page]).per(10)
     counts(@user)
+    @featured = @user.featured
   end
 
   def new
@@ -64,6 +67,17 @@ class UsersController < ApplicationController
     @posts = @team.posts.order(created_at: :desc).page(params[:page])
   end
   
+  def featured
+    @teams = Team.all
+    @team_id = params[:team_id]
+    if @team_id.present?
+      @players = Player.where(team_id: @team_id)
+    else
+      @players = []
+    end
+    @user = User.find(params[:id])
+  end
+  
   private
   
   def user_params
@@ -76,6 +90,7 @@ class UsersController < ApplicationController
   
   def user_myteams_present?
     unless current_user.team.present?
+      flash[:success] = '掲示板にアクセスするには好きな球団の選択が必要です。'
       redirect_to edit_user_path(current_user)
     end
   end

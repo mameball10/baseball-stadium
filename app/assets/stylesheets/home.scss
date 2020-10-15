@@ -1,0 +1,63 @@
+.post-message {
+    border-bottom: 1px double black;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.messages {
+    background-color: white;
+    border: 1px solid #ddd;
+}
+
+.message {
+    border-bottom: 1px dotted #ddd;
+}
+
+.heading p {
+    position: relative;
+    padding: 0.25em 1em;
+    border: solid 1px black;
+    border-radius: 3px 0 3px 0;
+    background-color: white;
+}
+
+.heading p:before, .heading p:after {
+    content: '';
+    position: absolute;
+    width:10px;
+    height: 10px;
+    border: solid 1px black;
+    border-radius: 50%;
+}
+
+.heading p:after {
+    top:-12px;
+    left:-12px;
+}
+.heading p:before {
+    bottom:-12px;
+    right:-12px;
+}
+
+.home-main {
+    margin-left: 80px;
+}
+
+.ranking {
+    text-align: center;
+}
+
+.ranking-heading p {
+   border: solid 1px black;
+}
+
+table {
+    text-align: center;
+    background-color: white;
+    padding: 30px;
+    width: 100%;
+}
+
+.ranking-heading {
+    background-color: white;
+}

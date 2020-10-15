@@ -1,40 +1,14 @@
-<div class="text-center">
+<div class="text-center my-4">
   <u><h1>プロフィール編集</h1></u>
 </div>
 
-<div class="row">
-  <div class="col-sm-6 offset-sm-3">
 
-    <%= form_with(model: @user, local: true) do |f| %>
-      <%= render 'layouts/error_messages', model: f.object %>
-      
-      <div class="form-group">
-        <%= f.label :name, 'ユーザ名' %>
-        <%= f.text_field :name, class: 'form-control' %>
-      </div>
-
-      <div class="form-group">
-        <%= f.label :email, 'メールアドレス' %>
-        <%= f.email_field :email, class: 'form-control' %>
-      </div>
-
-      <div class="form-group">
-        <%= f.label :password, 'パスワード' %>
-        <%= f.password_field :password, class: 'form-control' %>
-      </div>
-
-      <div class="form-group">
-        <%= f.label :password_confirmation, 'パスワード (確認用)' %>
-        <%= f.password_field :password_confirmation, class: 'form-control' %>
-      </div>
-      
-      <div class="form-group">
-        <%= f.label :team_id, '好きな球団を1つ選択してください。' %>
-        <%= f.label :team_id, '好きな球団を選択すると選択した球団の掲示板にアクセスできます。' %>
-        <%= f.collection_select :team_id, Team.all, :id, :team_name, include_blank: true %>
-      </div>
-
-      <%= f.submit '完了', class: 'btn btn-primary btn-block' %>
-    <% end %>
-  </div>
-</div>
+<ul class="nav nav-tabs nav-justified mb-3">
+  <li class="nav-item">
+    <a href="<%= edit_user_path(@user) %>" class="nav-link <%= 'active' if current_page?(edit_user_path(@user)) %>"> アカウント設定・好きな球団 </a></li>
+  </li>
+  <li class="nav-item">
+    <a href="<%= featured_user_path(@user) %>" class="nav-link <%= 'active' if current_page?(featured_user_path(@user)) %>"> 注目選手 </a></li>
+  </li>
+</ul>
+<%= render 'users/edit_user', user: @user %>

@@ -1,0 +1,68 @@
+.jumbotron {
+    background-image: url('top-image.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position : right bottom;
+    color: white;
+    height: 500px;
+}
+
+.jumbotron h1 {
+    font-size: 50px;
+    padding-left: 30px;
+}
+
+.jumbotron p {
+    font-size: 20px;
+    padding-left: 30px;
+}
+
+.button {
+    text-align: center;
+    padding: 80px;
+}
+
+.btn {
+    margin-right: 55px;
+    opacity: 0.7;
+}
+
+.btn:hover {
+    opacity: 1;
+}
+
+.main {
+    padding: 20px;
+}
+
+ul {
+     list-style: none;
+}
+
+.illusts {
+    height: 180px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.illust {
+    width: 30%;
+    background-color: white;
+    text-align: center;
+    margin-left: 30px;
+    border: 1px solid #ddd;
+}
+
+.illust img{
+    padding: 10px;
+}
+
+.messages {
+    background-color: white;
+    margin-left: 30px;
+    border: 1px solid #ddd;
+}
+
+.message {
+    border-bottom: 1px dotted #ddd;
+}
